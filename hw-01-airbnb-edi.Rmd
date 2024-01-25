@@ -112,19 +112,23 @@ You can find descriptions of each of the variables in the help file for the data
 
 ```{r airbnb_price_neighbourhood_distribution}
 
-ggplot(data = edibnb, mapping = aes(x = price)) +
-    geom_histogram(binwidth = 15) +
-    facet_wrap(~neighbourhood, scales = "fixed") +
+library(ggplot2)
+ggplot(edibnb, aes(x = price)) +
+  geom_histogram(binwidth = 15) +
+  facet_wrap(~neighbourhood, scales = "fixed") +
   labs(
     title = "Distribution of Airbnb Prices by Neighbourhood"
   )
+
 
 ```
 
 **When typing eval=TRUE to present ggplot as visual I am left with the following message...**
 
-Error in `ggplot()`:
-! could not find function "ggplot"
+Error:
+! object 'edibnb' not found
+Backtrace:
+ 1. ggplot2::ggplot(edibnb, aes(x = price))
 Execution halted
 
 *For this reason I have decided to skip visual presentation on exercise 3*
@@ -142,6 +146,51 @@ Let's de-construct this code:
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards.*
 
 4.  Use a single pipeline to identity the neighbourhoods with the top five median listing prices. Then, in another pipeline filter the data for these five neighbourhoods and make ridge plots of the distributions of listing prices in these five neighbourhoods. In a third pipeline calculate the minimum, mean, median, standard deviation, IQR, and maximum listing price in each of these neighbourhoods. Use the visualisation and the summary statistics to describe the distribution of listing prices in the neighbourhoods. (Your answer will include three pipelines, one of which ends in a visualisation, and a narrative.)
+
+**Part 1 - Neighbourhoods with the top five median listing price:**
+
+New Town, Old Town, West End, Stockbridge, and Bruntsfield
+
+**Part 2 - Ridge Plot**
+
+```{r airbnb_prices_top_neighbourhoods}
+
+library(ggplot2)
+ggplot(filtered_data, aes(x = price, y = neighbourhood, fill = neighbourhood)) +
+  geom_density_ridges() +
+  labs(
+    title = "Distribution of Airbnb Prices in Top 5 Neighbourhoods",
+    x = "Listing Price",
+    y = "Neighbourhood"
+  )
+
+```
+
+**Part 3 -Narrative Explantion**
+
+```{r airbnb_prices_top_neighbourhoods_summary}
+
+library(ggplot2)
+ggplot(filtered_data, aes(x = neighbourhood, y = price, fill = neighbourhood)) +
+  geom_boxplot() +
+  labs(
+    title = "Summary of Airbnb Prices in Top 5 Neighbourhoods",
+    x = "Neighbourhood",
+    y = "Listing Price"
+  )
+
+```
+
+The following graph shows that New Town, Old Town, and West End, each share the highest single value airbnb at a price of 1000. However, the median highest is New Town at 136.
+Listed are the following minimum, mean, and prices, as well as standard deviation for the 5 towns.
+
+The visualization of the filtered, 5 top neighbourhoods, shows that West End has the average hightest listing price. This is followed by Stockbridge, Old Town, New Town, and Bruntsfield.
+*Bruntsfield*: Minimum price = 10, mean price = 99.4, median price = 80, standard deviation is 90.2.
+*New Town*: Minimum price = 12, mean price = 136, median price = 100, standard deviation is 109
+*Old Town*: Minimum price = 15, mean price = 128, median price = 110, standard deviation is 110
+*Stockbridge*: Minimum price = 121, mean price = 104, median price = 85, standard deviation is 77.6
+*West End*: Minimum price = 19, mean price = 116, median price = 90, standard deviation is 93.3
+
 5.  Create a visualization that will help you compare the distribution of review scores (`review_scores_rating`) across neighbourhoods. You get to decide what type of visualisation to create and there is more than one correct answer! In your answer, include a brief interpretation of how Airbnb guests rate properties in general and how the neighbourhoods compare to each other in terms of their ratings.
 
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
