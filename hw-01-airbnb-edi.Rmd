@@ -193,6 +193,27 @@ The visualization of the filtered, 5 top neighbourhoods, shows that West End has
 
 5.  Create a visualization that will help you compare the distribution of review scores (`review_scores_rating`) across neighbourhoods. You get to decide what type of visualisation to create and there is more than one correct answer! In your answer, include a brief interpretation of how Airbnb guests rate properties in general and how the neighbourhoods compare to each other in terms of their ratings.
 
+```{r}
+#| label: multi
+
+library(ggplot2)
+ggplot(edibnb, aes(x = neighbourhood, y = review_scores_rating, fill = neighbourhood)) +
+  geom_boxplot() +
+  labs(
+    title = "Distribution of Review Scores Across Neighbourhoods",
+    x = "Neighbourhood",
+    y = "Review Scores Rating",
+    fill = "Neighbourhood"
+  )
+
+
+```
+
+**Interpretation of Graph:**
+The above box plat shows the distribution of review scores across neighbourhoods.
+The y-axis represents review scores given by guests, while the x-acis and colour of box show the corresponding neighbourhood.
+The median line inside each box shows the aberage middle value or rating of a review. The Higher this line is, the higher on average the reviews were.
+
 🧶 ✅ ⬆️ Knit, *commit, and push your changes to GitHub with an appropriate commit message. Make sure to commit and push all changed files so that your Git pane is cleared up afterwards and review the md document on GitHub to make sure you're happy with the final state of your work.*
 
 *Save a pdf version and submit to moodle*
